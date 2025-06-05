@@ -1,0 +1,22 @@
+services:
+  minio:
+    image: minio/minio:RELEASE.2024-10-02T17-50-41Z
+    restart: always
+    ports:
+      - 9000:9000
+      - 9001:9001
+    environment:
+      - MINIO_HTTP_TRACE=/var/log/minio.log
+      - MINIO_PROMETHEUS_AUTH_TYPE=public
+    command: server --console-address ":9001" /data
+    volumes:
+      - ./data/minio/data:/data
+      - ./data/minio/log:/var/log
+    healthcheck:
+      test: [ "CMD", "curl -I http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 80s
+    env_file:
+      - .env
