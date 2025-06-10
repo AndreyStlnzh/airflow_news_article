@@ -33,7 +33,7 @@ def bytes_to_dataframe(
         data_df = pd.read_csv(buffer)
         
     elif format == "parquet":
-        buffer - BytesIO(file_bytes)
+        buffer = BytesIO(file_bytes)
         data_df = pd.read_parquet(buffer)
 
     return data_df

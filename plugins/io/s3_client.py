@@ -46,7 +46,6 @@ def uploud_to_minio(
 def download_from_minio(
     minio_path: str,
     minio_bucket: str,
-    format: Literal["csv", "parquet"],
 ) -> pd.DataFrame:
     """
     Функция скачивания csv файла с minio
@@ -61,8 +60,11 @@ def download_from_minio(
     """
     s3 = S3Hook('minio_conn')
 
-    file_bytes = s3.get_key(
+    logging.info(f"Считываем с minio файл {minio_path}")
+    obj = s3.get_key(
         key=minio_path, 
         bucket_name=minio_bucket,
     )
+    file_bytes = obj.get()["Body"].read()
+    
     return file_bytes

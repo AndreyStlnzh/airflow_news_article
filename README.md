@@ -39,14 +39,13 @@ The ETL process should be performed once a week to ensure fresh data.
 airflow-project/
 ├── dags/                       # Main DAG definitions
 │   └── news_article_dag.py     # Primary pipeline
-├── plugins/
-│   ├── io/                     # dataframe ⇄ bytes
-│   └── s3_client/              # Custom operators/hooks
-├── include/                    # SQL queries/configs
 ├── etl/                        # Core business logic
 │   ├── extract/
 │   ├── transform/              # NLP processing
 │   └── load/                   # DB/MinIO utils
+├── plugins/
+│   ├── io/                     # dataframe ⇄ bytes
+│   └── s3_client/              # Custom operators/hooks
 └── config/                     # Environment configs
 ```
 

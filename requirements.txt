@@ -1,0 +1,7 @@
+# apache-airflow==2.9.1
+nltk==3.9.1
+pandas==2.3.0
+Requests==2.32.4
+setuptools==66.1.1
+psycopg2-binary==2.9.10
+pyarrow

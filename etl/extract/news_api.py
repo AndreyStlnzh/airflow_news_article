@@ -1,5 +1,7 @@
+import logging
 import requests
 import pandas as pd
+import json
 
 from pandas import json_normalize
 
@@ -39,7 +41,8 @@ class NewsApi:
         data_df = None
         page = 1
         while True:
-            print("Page: ", page)
+            logging.info(f"Запрашиваем page: {str(page)}")
+
             params = {
                 "q": keyword,
                 "from": date_from,
@@ -47,19 +50,40 @@ class NewsApi:
                 "page": page,
                 "apiKey": api_key,
             }
-            print(f"Обращаемся по адресу {self._news_api_url}")
-            response = requests.get(self._news_api_url, params=params)
-            print(response.status_code)
+
+            logging.info(json.dumps(params))
+            logging.info(f"Обращаемся по адресу {self._news_api_url}")
+            try:
+                response = requests.get(
+                    self._news_api_url, 
+                    params=params,
+                    timeout=3,
+                )
+                
+            except requests.exceptions.Timeout:
+                logging.warning("Ошибка timeout от NewsApi. Ответ не пришел")
+                page += 1
+                continue
+            except requests.exceptions.ConnectionError as e:
+                print("🔌 Ошибка соединения (включая ReadTimeout):", e)
+                page += 1
+                continue
+            except requests.exceptions.RequestException as e:
+                logging.warning("Произошла ошибка запроса:", e)
+                page += 1
+                continue
+            
+            logging.info(f"Статус: {response.status_code}")
             if response.status_code != 200:
-                print(f"Получили {response.status_code}")
+                logging.info(f"Получили {response.status_code}")
                 if save_csv:
                     data_df.to_csv(f"data_{keyword}.csv")
-                    print(f"Сохранили данные в data_{keyword}.csv")
+                    logging.info(f"Сохранили данные в data_{keyword}.csv")
                 return data_df
             
-            print("Приняли результат, начинаем обработку")
+            logging.info("Приняли результат")
             data = response.json()
-            # print(f"Всего {data["totalResults"]} новостных статей по данному запросу")
+            logging.info(f"Всего {data["totalResults"]} новостных статей по данному запросу")
 
             data_df = pd.concat([data_df, json_normalize(data["articles"])], ignore_index=True)
             page += 1
