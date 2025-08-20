@@ -3,7 +3,6 @@ import pandas as pd
 
 from typing import Literal
 from datetime import datetime
-from io import BytesIO
 from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 
 

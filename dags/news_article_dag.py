@@ -1,5 +1,4 @@
 import logging
-
 from datetime import datetime, timedelta
 
 from airflow.decorators import dag, task
@@ -104,7 +103,7 @@ def news_article_dag():
         logging.info("Данные загружены в minio")
         logging.info(f"Путь в минио: {minio_path}")
 
-        return minio_path
+        return minio_path, words, counts
     
     @task
     def load_results_to_db(minio_path: str):
@@ -112,7 +111,8 @@ def news_article_dag():
 
 
     minio_path = get_articles()
-    prepared_minio_path = prepare_data(minio_path)
+    prepared_minio_path, words, counts = prepare_data(minio_path)
+    load_results_to_db()
 
     minio_path >> prepared_minio_path
 
