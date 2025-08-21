@@ -1,4 +1,5 @@
 # Analysis of news articles
+Weekly automated ETL pipeline in Airflow that collects and processes news articles, stores structured data in PostgreSQL, and provides analytics-ready datasets in MinIO.
 
 ETL-pipeline implementation orchestrated by Airflow. <u>Fundamentals of Data Engineering</u>
 
@@ -39,8 +40,11 @@ The ETL process should be performed once a week to ensure fresh data.
 airflow-project/
 ├── dags/                       # Main DAG definitions
 │   └── news_article_dag.py     # Primary pipeline
+├── db/                         # table initialization and data schema versioning
+│   ├── migrations/             # alembic migrations
+│   └── models/                 # table models
 ├── etl/                        # Core business logic
-│   ├── extract/
+│   ├── extract/                # data retrieval
 │   ├── transform/              # NLP processing
 │   └── load/                   # DB/MinIO utils
 ├── plugins/
@@ -53,4 +57,4 @@ airflow-project/
 ...
 
 
-./db folder for db table initialization and for data schema versioning. It's better to have this in a separate project but for educational purposes it was used in the same project with Airflow
+./db folder for db table initialization and for data schema versioning. In real-world projects, DB migrations would typically be in a separate repository, but here they are colocated with Airflow for educational purposes.
