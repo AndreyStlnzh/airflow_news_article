@@ -107,6 +107,9 @@ def news_article_dag():
     
     @task
     def load_results_to_db(minio_path: str):
+        # скачать с минио паркет файл и сохранить все как сохранял в new_article
+        from airflow.providers.postgres.hooks.postgres import PostgresHook
+        postgres_hook = PostgresHook("postgres_conn")
         pass
 
 

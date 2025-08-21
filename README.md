@@ -51,3 +51,6 @@ airflow-project/
 
 ## Run
 ...
+
+
+./db folder for db table initialization and for data schema versioning. It's better to have this in a separate project but for educational purposes it was used in the same project with Airflow

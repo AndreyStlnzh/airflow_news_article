@@ -83,7 +83,7 @@ class NewsApi:
             
             logging.info("Приняли результат")
             data = response.json()
-            logging.info(f"Всего {data["totalResults"]} новостных статей по данному запросу")
+            logging.info(f"Всего {data['totalResults']} новостных статей по данному запросу")
 
             data_df = pd.concat([data_df, json_normalize(data["articles"])], ignore_index=True)
             page += 1
