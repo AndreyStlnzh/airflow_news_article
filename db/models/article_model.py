@@ -1,5 +1,5 @@
 from datetime import datetime
-from sqlalchemy import Column, String, DateTime
+from sqlalchemy import Column, String, DateTime, Date, Time
 from ..db_connection import BaseModel
 
 class Article(BaseModel):
@@ -7,6 +7,8 @@ class Article(BaseModel):
     title = Column(String, nullable=False)
     description = Column(String)
     url = Column(String)
-    publishedAt = Column(DateTime, default=datetime.utcnow)
+    published_at = Column(DateTime, default=datetime.utcnow)
+    date = Column(Date)
+    time = Column(Time)
     content = Column(String)
     sentiment = Column(String)

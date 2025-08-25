@@ -11,15 +11,18 @@ Collect, process, and save data from news sites to analyze the most popular topi
 The ETL process should be performed once a week to ensure fresh data.
 
 ## ETL-pipeline
+The DAG graph is shown in the image below
 
-1) **Extract**
+![alt text](img/DAG_graph.png)
+
+1) **Extract. get_articles**
     - Using the API of the news aggregator;
     - Uploading articles on the specified topics (for example, "technology", "science", "apple").
-2) **Transform**
+2) **Transform. prepare_data**
     - Text preprocessing (stop words, extra characters);
     - Sentiment analysis;
     - Identifying the main topics (TF-IDF).
-3) **Load**
+3) **Load. load_results_to_db**
     - PostgreSQL: SQLAlchemy hooks
     - MinIO: S3Hook integration
         - Parquet for analytics
@@ -29,6 +32,7 @@ The ETL process should be performed once a week to ensure fresh data.
 
 - Apache Airflow
 - SQLAlchemy (PostgreSQL)
+- alembic
 - MinIO
 - requests
 - pandas, nltk

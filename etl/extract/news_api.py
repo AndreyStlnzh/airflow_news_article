@@ -40,7 +40,7 @@ class NewsApi:
         """
         data_df = None
         page = 1
-        while True:
+        while page < 10:
             logging.info(f"Запрашиваем page: {str(page)}")
 
             params = {

@@ -1,6 +1,6 @@
 import pandas as pd
 
-from typing import Tuple
+from typing import List, Tuple
 from collections import Counter
 
 class MostCommonWords:
@@ -12,7 +12,7 @@ class MostCommonWords:
         self,
         data: pd.DataFrame,
         n: int=10
-    ) -> Tuple[list, list]:
+    ) -> List[Tuple]:
         """Функция нахождения самых частых слов
 
         Args:
@@ -26,7 +26,6 @@ class MostCommonWords:
 
         word_count = Counter(all_words)
         most_common = word_count.most_common(n)
-        words, count = zip(*most_common)
 
-        return words, count
+        return most_common
     

@@ -92,6 +92,7 @@ class TextCleaner:
         self.data['publishedAt'] = pd.to_datetime(self.data['publishedAt'], errors='coerce')
         self.data['date'] = self.data['publishedAt'].dt.date
         self.data['time'] = self.data['publishedAt'].dt.time
+        self.data.rename(columns={'publishedAt': 'published_at'}, inplace=True)
 
 
     def _filter_data(
